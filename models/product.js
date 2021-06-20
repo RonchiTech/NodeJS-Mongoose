@@ -48,11 +48,11 @@ class Product {
       .collection('products')
       .find({ _id: new mongodb.ObjectId(prodId) })
       .next()
-      .then((result) => {
-        console.log(result);
-        return result;
-      })
-      .catch((err) => console.log(err));
+      // .then((result) => {
+      //   console.log(result);
+      //   return result;
+      // })
+      // .catch((err) => console.log(err));
   }
   static deleteById(prodId) {
     const db = getDb();
