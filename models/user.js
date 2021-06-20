@@ -8,7 +8,19 @@ class User {
     this.cart = cart;
     this._id = id;
   }
-
+  getOrders() {
+    const db = getDb();
+    return db
+        .collection('orders')
+        //find({ user: { _id: new mongodb.ObjectId(this._id) } })
+        .find({ 'user._id': new mongodb.ObjectId(this._id) })
+        .toArray()
+        .then((results) => {
+          console.log('getting orders', results);
+          return results;
+        })
+        .catch((err) => console.log(err))
+  }
   addOrder() {
     const db = getDb();
     return this.getCart()
