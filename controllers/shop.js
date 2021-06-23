@@ -147,29 +147,7 @@ exports.postOrder = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-  req.user
-    .populate('cart.items.productId')
-    .execPopulate()
-    .then((user) => {
-      const product = user.cart.items.map((i) => {
-        return {
-          quantity: i.quantity,
-          product: i.productId,
-        };
-      });
-      const order = new Order({
-        user: {
-          name: req.user.name,
-          userId: req.user._id,
-        },
-        products: [
-          {
-            product: product,
-          },
-        ],
-      });
-      return order.save();
-    })
+  Order.find({ 'user.userId': req.user._id })
     .then((orders) => {
       console.log('GetOrders', orders);
       res.render('shop/orders', {
